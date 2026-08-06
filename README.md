@@ -1,8 +1,69 @@
-![Логотип](./logo.png)
-# NixHelp - Nix/NixOS Helper Utility
+<p align="center">
+  <img src="./assets/logo.png" alt="Логотип NixHelp" width="200"/>
+</p>
 
-[![Build Status](https://github.com/qwantuum/nixhelp/actions/workflows/release.yml/badge.svg)](https://github.com/qwantuum/nixhelp/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<h1 align="center">NixHelp - Nix/NixOS Helper Utility</h1>
+
+<p align="center">
+  <a href="https://github.com/qwantuum/nixhelp/actions/workflows/release.yml">
+    <img src="https://github.com/qwantuum/nixhelp/actions/workflows/release.yml/badge.svg" alt="Build Status"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/releases/latest">
+    <img src="https://img.shields.io/github/v/release/qwantuum/nixhelp?color=blue&label=Release" alt="Latest Release"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/qwantuum/nixhelp?color=green" alt="License"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/stargazers">
+    <img src="https://img.shields.io/github/stars/qwantuum/nixhelp?style=social" alt="Stars"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/network/members">
+    <img src="https://img.shields.io/github/forks/qwantuum/nixhelp?style=social" alt="Forks"/>
+  </a>
+  <br/>
+  <a href="https://nixos.org">
+    <img src="https://img.shields.io/badge/NixOS-unstable-blue.svg?logo=nixos" alt="NixOS"/>
+  </a>
+  <a href="https://search.nixos.org/packages">
+    <img src="https://img.shields.io/badge/nixpkgs-available-green.svg?logo=nix" alt="Nix Packages"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/issues">
+    <img src="https://img.shields.io/github/issues/qwantuum/nixhelp" alt="Issues"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/pulls">
+    <img src="https://img.shields.io/github/issues-pr/qwantuum/nixhelp" alt="Pull Requests"/>
+  </a>
+  <br/>
+  <a href="https://github.com/qwantuum/nixhelp/commits/main">
+    <img src="https://img.shields.io/github/last-commit/qwantuum/nixhelp" alt="Last Commit"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/qwantuum/nixhelp" alt="Contributors"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/pulse">
+    <img src="https://img.shields.io/github/commit-activity/m/qwantuum/nixhelp" alt="Commit Activity"/>
+  </a>
+  <a href="https://github.com/qwantuum/nixhelp/blob/main/README.md">
+    <img src="https://img.shields.io/badge/maintenance-active-green.svg" alt="Maintenance"/>
+  </a>
+  <br/>
+  <a href="https://discord.gg/nixos">
+    <img src="https://img.shields.io/discord/528304179436208138?label=Discord&logo=discord" alt="Discord"/>
+  </a>
+  <a href="https://matrix.to/#/#nix:nixos.org">
+    <img src="https://img.shields.io/matrix/nix:nixos.org?label=Matrix&logo=matrix" alt="Matrix"/>
+  </a>
+  <a href="https://reddit.com/r/NixOS">
+    <img src="https://img.shields.io/reddit/subreddit-subscribers/NixOS?style=social" alt="Reddit"/>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="Version"/>
+  <img src="https://img.shields.io/badge/C%2B%2B-17-orange.svg" alt="C++"/>
+  <img src="https://img.shields.io/badge/Nix-Flakes-lightblue.svg" alt="Nix Flakes"/>
+  <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20macOS-blue.svg" alt="Platform"/>
+  <img src="https://img.shields.io/badge/Code%20Style-clang--format-purple.svg" alt="Code Style"/>
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"/>
+</p>
 
 **NixHelp** — это утилита для удобного управления пакетами в Nix/NixOS с современным TUI интерфейсом и мощным CLI.
 
