@@ -239,6 +239,29 @@ void printBanner() {
 )" << std::endl;
 }
 
+void printHelp() {
+    std::cout << "\n=== Available Commands ===" << std::endl;
+    std::cout << "CLI Mode:" << std::endl;
+    std::cout << "  search <query>       - Search for packages" << std::endl;
+    std::cout << "  info <package>       - Show package information" << std::endl;
+    std::cout << "  install <package>    - Install a package" << std::endl;
+    std::cout << "  uninstall <package>  - Uninstall a package" << std::endl;
+    std::cout << "  gc                   - Run garbage collection (quick)" << std::endl;
+    std::cout << "  gc-deep              - Run deep garbage collection" << std::endl;
+    std::cout << "  store                - Show Nix store information" << std::endl;
+    std::cout << "  shell <package>      - Start shell with package" << std::endl;
+    std::cout << "  flake-update         - Update flake inputs" << std::endl;
+    std::cout << "  tui                  - Launch TUI interface" << std::endl;
+    std::cout << "  help                 - Show this help message" << std::endl;
+    std::cout << "  quit/exit            - Exit the program" << std::endl;
+    std::cout << "\nExamples:" << std::endl;
+    std::cout << "  nixhelp search firefox" << std::endl;
+    std::cout << "  nixhelp install git" << std::endl;
+    std::cout << "  nixhelp gc" << std::endl;
+    std::cout << "  nixhelp tui" << std::endl;
+    std::cout << std::endl;
+}
+
 int main(int argc, char* argv[]) {
     printBanner();
 
@@ -266,8 +289,13 @@ int main(int argc, char* argv[]) {
             helper.startShell(argv[2]);
         } else if (command == "flake-update") {
             helper.updateFlake();
+        } else if (command == "tui") {
+            std::cerr << "TUI mode requires ncurses support. Building with -lncurses flag." << std::endl;
+            std::cerr << "Note: Full TUI implementation pending ncurses linkage verification." << std::endl;
+            return 1;
         } else if (command == "help") {
-            std::cout << "Use 'tui' command for interactive mode or 'help' for CLI usage" << std::endl;
+            printHelp();
+            return 0;
         } else {
             std::cerr << "Unknown command or missing arguments. Use 'help' for usage." << std::endl;
             return 1;
@@ -337,6 +365,11 @@ int main(int argc, char* argv[]) {
             }
         } else if (command == "flake-update") {
             helper.updateFlake();
+        } else if (command == "tui") {
+            std::cerr << "TUI mode requires ncurses support. Building with -lncurses flag." << std::endl;
+            std::cerr << "Note: Full TUI implementation pending ncurses linkage verification." << std::endl;
+        } else if (command == "help") {
+            printHelp();
         } else {
             std::cerr << "Unknown command: " << command << ". Type 'help' for usage." << std::endl;
         }

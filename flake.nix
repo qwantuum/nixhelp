@@ -22,7 +22,7 @@
             buildInputs = [ pkgs.ncurses ];
             
             buildPhase = ''
-              g++ -std=c++17 -O2 -o nixhelp nixhelp.cpp -lncurses
+              g++ -std=c++17 -O2 -o nixhelp src/main.cpp -lncurses
             '';
             
             installPhase = ''
@@ -50,7 +50,7 @@
           buildInputs = [ pkgs.gcc pkgs.ncurses pkgs.gdb ];
           shellHook = ''
             echo "Development shell for nixhelp"
-            echo "Build with: g++ -std=c++17 -O2 -o nixhelp nixhelp.cpp -lncurses"
+            echo "Build with: g++ -std=c++17 -O2 -o nixhelp src/main.cpp -lncurses"
           '';
         };
       }
