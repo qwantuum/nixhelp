@@ -22,7 +22,7 @@
             buildInputs = [ pkgs.ncurses ];
             
             buildPhase = ''
-              g++ -std=c++17 -O2 -o nixhelp src/main.cpp -lncurses
+              g++ -std=c++17 -O2 -o nixhelp src/main.cpp src/nixhelp_core.cpp src/nixhelp_tui.cpp -Iinclude -lncurses
             '';
             
             installPhase = ''

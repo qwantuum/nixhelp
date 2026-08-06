@@ -1,104 +1,178 @@
-# Nix Helper TUI
+# NixHelp - Nix/NixOS Helper Utility
 
-Полноценный TUI (Text User Interface) хелпер для Nix/NixOS на C++ с использованием ncurses.
+[![Build Status](https://github.com/qwantuum/nixhelp/actions/workflows/release.yml/badge.svg)](https://github.com/qwantuum/nixhelp/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Возможности
+**NixHelp** — это утилита для удобного управления пакетами в Nix/NixOS с современным TUI интерфейсом и мощным CLI.
 
-### TUI Режим
-- 🎨 Цветной интерфейс с ncurses
-- 🔍 Поиск пакетов в реальном времени
-- 📦 Просмотр установленных пакетов
-- 💾 Информация о хранилище
-- 🧹 Garbage collection (быстрая и глубокая очистка)
-- 🔄 Обновление flake inputs
-- ⌨️ Навигация стрелками или vim-клавишами (j/k)
+## 🚀 Возможности
 
-### CLI Режим
+### CLI режим
+- 🔍 **Поиск пакетов** — быстрый поиск в nixpkgs
+- 📦 **Установка/удаление** — управление пакетами через nix profile
+- 🧹 **Garbage Collection** — очистка хранилища (быстрая и глубокая)
+- 💾 **Информация о хранилище** — статистика использования
+- 🐚 **Shell с пакетом** — временная среда с пакетом
+- 🔄 **Flake update** — обновление flake inputs
+
+### TUI режим
+- 🎨 **Цветной интерфейс** — приятный терминальный UI
+- ⌨️ **Навигация** — стрелки или vim-клавиши (j/k)
+- 🖱️ **Поддержка мыши** — клики для выбора
+- 📊 **Интерактивный поиск** — ввод запроса в реальном времени
+- ✅ **Подтверждения** — защита от случайных действий
+
+## 📦 Установка
+
+### Через Nix Flakes (рекомендуется)
+
 ```bash
-./nixhelp search <query>       # Поиск пакетов
-./nixhelp info <package>       # Информация о пакете
-./nixhelp install <package>    # Установка пакета
-./nixhelp uninstall <package>  # Удаление пакета
-./nixhelp gc                   # Garbage collection
-./nixhelp gc-deep              # Глубокая очистка
-./nixhelp store                # Информация о хранилище
-./nixhelp shell <package>      # Shell с пакетом
-./nixhelp flake-update         # Обновить flake
-./nixhelp tui                  # Запустить TUI
-./nixhelp help                 # Справка
+nix profile install github:qwantuum/nixhelp
 ```
 
-## Установка через Flakes
+### Из исходников
 
-### 1. Добавьте в inputs вашего flake.nix:
-```nix
-inputs.nixhelp.url = "github:yourusername/nixhelp";
-```
-
-### 2. Добавьте в outputs:
-```nix
-outputs = { self, nixpkgs, nixhelp, ... }: {
-  nixosConfigurations.mySystem = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [
-      ./configuration.nix
-      {
-        environment.systemPackages = [ nixhelp.packages.x86_64-linux.default ];
-      }
-    ];
-  };
-}
-```
-
-### 3. Или установите напрямую:
 ```bash
-nix profile install github:yourusername/nixhelp
+# Клонирование репозитория
+git clone https://github.com/qwantuum/nixhelp.git
+cd nixhelp
+
+# Сборка через Python скрипт
+python3 scripts/build.py all
+
+# Или вручную
+g++ -std=c++17 -O2 -o nixhelp src/main.cpp src/nixhelp_core.cpp src/nixhelp_tui.cpp -Iinclude -lncurses
+
+# Установка в систему
+sudo python3 scripts/build.py install
 ```
 
-### 4. Или используйте через nix run:
-```bash
-nix run github:yourusername/nixhelp
-nix run github:yourusername/nixhelp -- search firefox
-nix run github:yourusername/nixhelp -- tui
-```
-
-## Сборка из исходников
-
-### Требования
+### Зависимости
 - GCC с поддержкой C++17
-- ncurses library
+- ncurses library (`libncurses-dev` на Debian/Ubuntu)
 
-### Компиляция
+## 💡 Использование
+
+### CLI команды
+
 ```bash
-g++ -std=c++17 -O2 -o nixhelp nixhelp.cpp -lncurses
+# Показать справку
+nixhelp help
+
+# Запустить TUI интерфейс
+nixhelp tui
+
+# Поиск пакетов
+nixhelp search firefox
+
+# Информация о пакете
+nixhelp info git
+
+# Установить пакет
+nixhelp install git
+
+# Удалить пакет
+nixhelp uninstall git
+
+# Garbage collection
+nixhelp gc           # Быстрая очистка
+nixhelp gc-deep      # Глубокая очистка
+
+# Информация о хранилище
+nixhelp store
+
+# Shell с пакетом
+nixhelp shell neovim
+
+# Обновить flake
+nixhelp flake-update
 ```
 
-### Разработка через flake
+### TUI интерфейс
+
 ```bash
-nix develop
-# В shell: g++ -std=c++17 -O2 -o nixhelp nixhelp.cpp -lncurses
+nixhelp tui
 ```
 
-## Структура проекта
+**Навигация:**
+- `↑↓` или `j/k` — перемещение по меню
+- `Enter` — выбор пункта
+- `q` или `Esc` — выход
+- Мышь — поддержка кликов
+
+## 🛠 Разработка
+
+### Структура проекта
 
 ```
-.
-├── flake.nix       # Nix flake для сборки и установки
-├── nixhelp.cpp     # Исходный код (TUI + CLI)
-├── nixhelp         # Скомпилированный бинарник
-└── README.md       # Документация
+nixhelp/
+├── src/
+│   ├── main.cpp           # Точка входа, CLI парсер
+│   ├── nixhelp_core.cpp   # Основная логика Nix
+│   └── nixhelp_tui.cpp    # TUI интерфейс (ncurses)
+├── include/
+│   ├── nixhelp_core.h     # Заголовки ядра
+│   └── nixhelp_tui.h      # Заголовки TUI
+├── scripts/
+│   ├── build.py           # Скрипт сборки
+│   └── test.py            # Набор тестов
+├── config/
+│   └── nixhelp.conf       # Конфигурация
+├── flake.nix              # Nix Flake
+├── package.json           # NPM-style метаданные
+└── README.md              # Документация
 ```
 
-## Управление в TUI
+### Сборка
 
-- **↑/↓ или j/k** - Навигация по меню
-- **Enter/Пробел** - Выбрать пункт
-- **q или ESC** - Назад/Выход
-- **В режиме поиска:**
-  - Печатайте для поиска
-  - **i** - Установить выбранный пакет
-  - **↑/↓** - Навигация по результатам
+```bash
+# Полная сборка и тесты
+python3 scripts/build.py all
 
-## Лицензия
+# Только сборка
+python3 scripts/build.py build
 
-MIT
+# Отладочная сборка
+python3 scripts/build.py build --debug
+
+# Запуск тестов
+python3 scripts/test.py
+
+# Очистка
+python3 scripts/build.py clean
+
+# Установка
+python3 scripts/build.py install
+```
+
+### Тесты
+
+```bash
+python3 scripts/test.py
+```
+
+Тесты проверяют:
+- Существование бинарника
+- Команду help
+- Неизвестные команды
+- Информацию о хранилище
+- Garbage collection
+- Поиск пакетов
+
+## 📄 Лицензия
+
+MIT License — см. файл [LICENSE](LICENSE) для деталей.
+
+## 🤝 Вклад
+
+Pull requests приветствуются! Для крупных изменений пожалуйста откройте issue сначала.
+
+## 🔗 Ссылки
+
+- [GitHub Repository](https://github.com/qwantuum/nixhelp)
+- [NixOS Wiki](https://wiki.nixos.org/)
+- [Nix Packages Search](https://search.nixos.org/packages)
+
+---
+
+Сделано с ❤️ для сообщества Nix/NixOS
