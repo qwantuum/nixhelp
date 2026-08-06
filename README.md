@@ -1,84 +1,103 @@
-# Nix Helper (nixhelp)
+# Nix Helper TUI
 
-Простой хелпер для управления пакетами в Nix/NixOS, написанный на C++.
+Полноценный TUI (Text User Interface) хелпер для Nix/NixOS на C++ с использованием ncurses.
 
 ## Возможности
 
-- 🔍 **Поиск пакетов** - поиск в nixpkgs
-- 📦 **Информация о пакете** - просмотр деталей пакета
-- ⬇️ **Установка/удаление** - управление пакетами в профиле пользователя
-- 🧹 **Очистка** - запуск garbage collection (обычный и глубокий)
-- 💾 **Информация о хранилище** - статистика /nix/store
-- 🐚 **Shell** - запуск shell с окружением пакета
-- 🔄 **Flake update** - обновление flake inputs
+### TUI Режим
+- 🎨 Цветной интерфейс с ncurses
+- 🔍 Поиск пакетов в реальном времени
+- 📦 Просмотр установленных пакетов
+- 💾 Информация о хранилище
+- 🧹 Garbage collection (быстрая и глубокая очистка)
+- 🔄 Обновление flake inputs
+- ⌨️ Навигация стрелками или vim-клавишами (j/k)
 
-## Сборка
-
+### CLI Режим
 ```bash
-g++ -std=c++17 -Wall -Wextra -O2 -o nixhelp nixhelp.cpp
+./nixhelp search <query>       # Поиск пакетов
+./nixhelp info <package>       # Информация о пакете
+./nixhelp install <package>    # Установка пакета
+./nixhelp uninstall <package>  # Удаление пакета
+./nixhelp gc                   # Garbage collection
+./nixhelp gc-deep              # Глубокая очистка
+./nixhelp store                # Информация о хранилище
+./nixhelp shell <package>      # Shell с пакетом
+./nixhelp flake-update         # Обновить flake
+./nixhelp tui                  # Запустить TUI
+./nixhelp help                 # Справка
 ```
 
-## Использование
+## Установка через Flakes
 
-### Интерактивный режим
-```bash
-./nixhelp
+### 1. Добавьте в inputs вашего flake.nix:
+```nix
+inputs.nixhelp.url = "github:yourusername/nixhelp";
 ```
 
-### Командная строка
-```bash
-# Поиск пакетов
-./nixhelp search firefox
-
-# Информация о пакете
-./nixhelp info git
-
-# Установка пакета
-./nixhelp install neovim
-
-# Удаление пакета
-./nixhelp uninstall neovim
-
-# Очистка (garbage collection)
-./nixhelp gc
-
-# Глубокая очистка (с удалением старых генераций)
-./nixhelp gc-deep
-
-# Информация о хранилище
-./nixhelp store
-
-# Запуск shell с пакетом
-./nixhelp shell python3
-
-# Обновление flake
-./nixhelp flake-update
-
-# Справка
-./nixhelp help
+### 2. Добавьте в outputs:
+```nix
+outputs = { self, nixpkgs, nixhelp, ... }: {
+  nixosConfigurations.mySystem = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      ./configuration.nix
+      {
+        environment.systemPackages = [ nixhelp.packages.x86_64-linux.default ];
+      }
+    ];
+  };
+}
 ```
 
-## Команды интерактивного режима
+### 3. Или установите напрямую:
+```bash
+nix profile install github:yourusername/nixhelp
+```
 
-| Команда | Описание |
-|---------|----------|
-| `search <query>` | Поиск пакетов по запросу |
-| `info <package>` | Показать информацию о пакете |
-| `install <package>` | Установить пакет |
-| `uninstall <package>` | Удалить пакет |
-| `gc` | Запустить garbage collection |
-| `gc-deep` | Глубокая очистка (с -d флагом) |
-| `store` | Показать информацию о хранилище |
-| `shell <package>` | Запустить shell с пакетом |
-| `flake-update` | Обновить flake inputs |
-| `help` | Показать справку |
-| `quit` / `exit` | Выход из программы |
+### 4. Или используйте через nix run:
+```bash
+nix run github:yourusername/nixhelp
+nix run github:yourusername/nixhelp -- search firefox
+nix run github:yourusername/nixhelp -- tui
+```
 
-## Требования
+## Сборка из исходников
 
-- Nix или NixOS
-- C++17 совместимый компилятор
-- Установленный `nix` в PATH
+### Требования
+- GCC с поддержкой C++17
+- ncurses library
+
+### Компиляция
+```bash
+g++ -std=c++17 -O2 -o nixhelp nixhelp.cpp -lncurses
+```
+
+### Разработка через flake
+```bash
+nix develop
+# В shell: g++ -std=c++17 -O2 -o nixhelp nixhelp.cpp -lncurses
+```
+
+## Структура проекта
+
+```
+.
+├── flake.nix       # Nix flake для сборки и установки
+├── nixhelp.cpp     # Исходный код (TUI + CLI)
+├── nixhelp         # Скомпилированный бинарник
+└── README.md       # Документация
+```
+
+## Управление в TUI
+
+- **↑/↓ или j/k** - Навигация по меню
+- **Enter/Пробел** - Выбрать пункт
+- **q или ESC** - Назад/Выход
+- **В режиме поиска:**
+  - Печатайте для поиска
+  - **i** - Установить выбранный пакет
+  - **↑/↓** - Навигация по результатам
 
 ## Лицензия
 
