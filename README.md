@@ -1,3 +1,4 @@
+
 # NixHelp - Nix/NixOS Helper Utility
 
 [![Build Status](https://github.com/qwantuum/nixhelp/actions/workflows/release.yml/badge.svg)](https://github.com/qwantuum/nixhelp/actions)
@@ -176,3 +177,5 @@ Pull requests приветствуются! Для крупных изменен
 ---
 
 Сделано с ❤️ для сообщества Nix/NixOS
+=======
+hixhelp
